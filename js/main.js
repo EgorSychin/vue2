@@ -15,8 +15,15 @@ Vue.component('product', {
 
        <div class="product-info">
            <h1>{{ title }}</h1>
-           <p v-if="onSale">On Sale!</p>
+           <p>{{ sale }}</p>
+           <h2>Description</h2>
            <p>{{ fuzzy }}<p>
+           <ul>
+                <li v-for="size in sizes">
+                    {{ size }}
+                </li>
+           </ul>
+           <h2>Stock: </h2>
            <p class="inStock" v-if="inStock">In stock</p>
            <p class="outOfStock" v-else>Out of Stock</p>
            <info-tabs :shipping="shipping" :details="details"></info-tabs>
@@ -45,7 +52,7 @@ Vue.component('product', {
     data() {
         return {
             link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks.",
-            fuzzy: "A pair of warm, fuzzy socks",
+            fuzzy: "A pair of warm, beautiful, fluffy socks. Warm in any cold weather.",
             product: "Socks",
             onSale: true,
             brand: 'Vue Mastery',
@@ -66,7 +73,8 @@ Vue.component('product', {
                     variantQuantity: 0
                 }
             ],
-            reviews: []
+            reviews: [],
+            sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']
         }
     },
     methods: {
@@ -93,10 +101,16 @@ Vue.component('product', {
         },
         shipping() {
             if (this.premium) {
-                return "Free";
+                return "Free shipping for premium account holders!";
             } else {
                 return 2.99
             }
+        },
+        sale() {
+            if (this.onSale) {
+                return this.brand + ' ' + this.product + ' are on sale!'
+            }
+            return  this.brand + ' ' + this.product + ' are not on sale'
         }
     },
     mounted() {
