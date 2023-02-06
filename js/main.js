@@ -15,9 +15,10 @@ Vue.component('product', {
 
        <div class="product-info">
            <h1>{{ title }}</h1>
-           <p v-if="inStock">In stock</p>
-           <p v-else>Out of Stock</p>
-           
+           <p v-if="onSale">On Sale!</p>
+           <p>{{ fuzzy }}<p>
+           <p class="inStock" v-if="inStock">In stock</p>
+           <p class="outOfStock" v-else>Out of Stock</p>
            <info-tabs :shipping="shipping" :details="details"></info-tabs>
            
            <div
@@ -34,14 +35,19 @@ Vue.component('product', {
                    :class="{ disabledButton: !inStock }"
            >
                Add to cart
-           </button>    
+           </button>    <br> <br>
+           <a :href="link" target="_blank">More products like this</a>
        </div>           
            <product-tabs :reviews="reviews"></product-tabs>
        </div>
+       
  `,
     data() {
         return {
+            link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks.",
+            fuzzy: "A pair of warm, fuzzy socks",
             product: "Socks",
+            onSale: true,
             brand: 'Vue Mastery',
             selectedVariant: 0,
             altText: "A pair of socks",
