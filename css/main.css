@@ -1,5 +1,4 @@
 body {
-    font-family: tahoma;
     color:#282828;
     margin: 0px;
     background-color: #fffafa ;
@@ -48,13 +47,11 @@ img {
 }
 
 button {
-    margin-top: 30px;
     border: none;
     background-color: #1E95EA;
     color: white;
-    height: 40px;
-    width: 100px;
     font-size: 14px;
+    height: 40px;
 }
 
 .disabledButton {
@@ -123,4 +120,10 @@ a:active {
 }
 .product-tabs{
     color: #1E95EA;
+}
+.remove{
+    margin-top: -10px
+}
+.container-button{
+    padding-top: 15px;
 }
