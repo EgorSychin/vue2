@@ -42,7 +42,16 @@ Vue.component('product', {
                    :class="{ disabledButton: !inStock }"
            >
                Add to cart
-           </button>    <br> <br>
+           </button>
+               
+               
+           <button
+                   v-on:click="removeFromCart"
+                   :disabled="!inStock"
+                   :class="{ disabledButton: !inStock }"
+           >
+               Remove From Cart
+           </button><br> <br>
            <a :href="link" target="_blank">More products like this</a>
        </div>           
            <product-tabs :reviews="reviews"></product-tabs>
@@ -84,7 +93,10 @@ Vue.component('product', {
         updateProduct(index) {
             this.selectedVariant = index;
             console.log(index);
-        }
+        },
+        removeFromCart(){
+            this.$emit('remove-cart', this.variants[this.selectedVariant].variantId);
+        },
 
 
 
@@ -285,6 +297,9 @@ let app = new Vue({
     methods: {
         updateCart(id) {
             this.cart.push(id);
+        },
+        removeFromCart() {
+            this.cart.pop();
         }
     }
 })
