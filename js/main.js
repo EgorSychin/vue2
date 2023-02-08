@@ -256,7 +256,9 @@ Vue.component('product-tabs', {
                </li>
              </ul>
            </div>
-        
+             <div v-show="selectedTab === 'Make a Review'">
+              <product-review></product-review>
+            </div>
      </div>
 
     `,
