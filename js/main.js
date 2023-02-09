@@ -13,6 +13,7 @@ Vue.component('product', {
     <div class="product-image">
            <img :src="image" :alt="altText"/>
        </div>
+       
 
        <div class="product-info">
            <h1>{{ title }}</h1>
@@ -65,16 +66,59 @@ Vue.component('product', {
            <a :href="link" target="_blank">More products like this</a>
 <!--           <info-tabs class="info-tabs" :shipping="shipping" :details="details"></info-tabs>-->
        </div>    
+       
+       
+       
+       
+       
+       
+       <div class="product-image">
+           <img :src="image" :alt="altText"/>
+       </div>
+       
+
+       <div class="product-info">
+           <h1>{{ titleScarf }}</h1>
+           <p>{{ scarf }}<p>
+           <h2>Stock: </h2>
+           <p class="stockScarf" v-if="inStock">In stock</p>
+           <p class="outOfStock" v-else>Out of Stock</p>
+
+          <div class="container-button">
+          
+                  <button
+                           v-on:click="addCart"
+                   >
+                       Add to cart
+                   </button>
+                       
+                       
+                   <button
+                           v-on:click="removeCart"
+                   >
+                       Remove From Cart
+                   </button><br> <br>
+          
+          </div>
+           
+           <a :href="link" target="_blank">More products like this</a>
+       </div>    
+       
+       
+       
+       
      
            <product-tabs :reviews="reviews" :shipping="shipping" :details="details"></product-tabs>
 
-       </div>
+    </div>
        
  `,
     data() {
         return {
             link: "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=socks.",
             fuzzy: "A pair of warm, beautiful, fluffy socks. Warm in any cold weather.",
+            scarf: "A pair of warm, beautiful, fluffy scarfs. Warm in any cold weather.",
+            titleScarf: "Scarfs",
             product: "Socks",
             onSale: true,
             brand: 'Vue Mastery',
@@ -96,15 +140,24 @@ Vue.component('product', {
                     variantQuantity: 0
                 }
             ],
+            scarfs: [
+                {
+                    scarfId: 1111,
+                    scarfColor: 'red',
+                    scarfImage: "./assets/illustration-of-scarf-vector.jpg",
+                    scarfQuantity: 20
+                }
+            ],
             reviews: [],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             selectedVariant: 0,
+            selectedScarf: 0
         }
     },
     methods: {
         addToCart() {
             this.$emit('add-to-cart',
-                this.variants[this.selectedVariant].variantId);
+                this.variants[this.selectedVariant].variantId)
         },
         updateProduct(index) {
             this.selectedVariant = index;
@@ -113,6 +166,14 @@ Vue.component('product', {
         removeFromCart(){
             this.$emit('remove-cart',
                 this.variants[this.selectedVariant].variantId);
+        },
+        addCart(){
+          this.$emit('add-to-cart',
+              this.scarfs[this.selectedScarf].scarfId)
+        },
+        removeCart(){
+            this.$emit('remove-cart',
+                this.scarfs[this.selectedScarf].scarfId);
         }
     },
     mounted(){
@@ -129,6 +190,9 @@ Vue.component('product', {
         },
         inStock() {
             return this.variants[this.selectedVariant].variantQuantity
+        },
+        stockScarf(){
+          return this.variants[this.selectedVariant].variantQuantity
         },
         shipping() {
             if (this.premium) {
